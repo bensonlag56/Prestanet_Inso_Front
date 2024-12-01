@@ -1,0 +1,17 @@
+<nav class="navbar">
+    <ul class="navbar-menu">
+      <li class="navbar-item">
+        <a [routerLink]="'/loans'" class="navbar-link">Préstamos</a>
+      </li>
+      <li class="navbar-item">
+        <a [routerLink]="'/schedule'" class="navbar-link">Cronogramas</a>
+      </li>
+      <li class="navbar-item">
+        <a [routerLink]="'/users'" class="navbar-link">Usuarios</a>
+      </li>
+      <li class="navbar-item">
+        <a (click)="logout()" class="navbar-link logout">Cerrar sesión</a>
+      </li>
+    </ul>
+  </nav>
+  
