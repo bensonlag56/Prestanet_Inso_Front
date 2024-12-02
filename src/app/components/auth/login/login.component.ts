@@ -12,8 +12,8 @@ import { FormsModule } from "@angular/forms";
   styleUrls: ["./login.component.css"],
 })
 export class LoginComponent {
-  username: string = "bren";
-  password: string = "bren";
+  username: string = "";
+  password: string = "";
   errorMessage: string = "";
 
   constructor(private authService: AuthService, private router: Router) {}
