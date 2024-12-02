@@ -7,7 +7,7 @@ import { catchError } from "rxjs/operators";
   providedIn: "root",
 })
 export class AuthService {
-  private apiUrl = "http://localhost:8080/auth"; // Ajusta según tu configuración
+  private apiUrl = "https://prestanet-inso-final.onrender.com/auth"; // Ajusta según tu configuración
   private tokenKey = "authToken"; // Clave para almacenar el token en localStorage
 
   constructor(private http: HttpClient) {}

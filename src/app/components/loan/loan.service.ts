@@ -11,7 +11,7 @@ import { catchError } from "rxjs/operators";
   providedIn: "root",
 })
 export class LoanService {
-  private apiUrl = "http://localhost:8080/api/loans"; // Cambia esta URL según tu configuración
+  private apiUrl = "https://prestanet-inso-final.onrender.com/api/loans"; // Cambia esta URL según tu configuración
 
   constructor(private http: HttpClient) {}
 
