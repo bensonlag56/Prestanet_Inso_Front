@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { Observable, throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/auth'; // Asegúrate de que esta URL sea correcta
-  private tokenKey = 'authToken'; // Clave para almacenar el token en localStorage
+  private apiUrl = "http://localhost:8080/auth"; // Ajusta según tu configuración
+  private tokenKey = "authToken"; // Clave para almacenar el token en localStorage
 
   constructor(private http: HttpClient) {}
 
@@ -16,17 +17,28 @@ export class AuthService {
    * @param credentials Objeto con username y password.
    * @returns Observable con el token JWT si la autenticación es exitosa.
    */
-  login(credentials: { username: string; password: string }): Observable<string> {
-    return this.http.post(`${this.apiUrl}/login`, credentials, { responseType: 'text' });
+  login(credentials: {
+    username: string;
+    password: string;
+  }): Observable<string> {
+    return this.http
+      .post(`${this.apiUrl}/login`, credentials, { responseType: "text" })
+      .pipe(catchError(this.handleError));
   }
 
   /**
    * Registra un nuevo usuario.
    * @param user Objeto con los datos del usuario (username, password, role).
-   * @returns Observable con el mensaje de éxito.
+   * @returns Observable con el mensaje de éxito o error.
    */
-  register(user: { username: string; password: string; role: string }): Observable<string> {
-    return this.http.post(`${this.apiUrl}/register`, user, { responseType: 'text' });
+  register(user: {
+    username: string;
+    password: string;
+    role: string;
+  }): Observable<string> {
+    return this.http
+      .post(`${this.apiUrl}/register`, user, { responseType: "text" })
+      .pipe(catchError(this.handleError));
   }
 
   /**
@@ -58,5 +70,20 @@ export class AuthService {
    */
   isAuthenticated(): boolean {
     return !!this.getToken();
+  }
+
+  /**
+   * Manejo de errores en las peticiones HTTP.
+   * @param error Objeto de error.
+   * @returns Observable con el error formateado.
+   */
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    let errorMessage = "Ha ocurrido un error inesperado";
+    if (error.status === 400 && error.error === "Username already exists") {
+      errorMessage = "El nombre de usuario ya está en uso.";
+    } else if (error.status === 401) {
+      errorMessage = "Credenciales incorrectas. Por favor, intente nuevamente.";
+    }
+    return throwError(() => new Error(errorMessage));
   }
 }
