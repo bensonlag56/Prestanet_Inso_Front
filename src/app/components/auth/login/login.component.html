@@ -31,7 +31,7 @@
         </div>
   
         <!-- Mensaje de error si los campos están vacíos o las credenciales son incorrectas -->
-        <div *ngIf="errorMessage" class="error-message">Por favor, complete ambos campos</div>
+        <div *ngIf="errorMessage" class="error-message">Campos Vacios o Credenciales Incorrectas</div>
   
         <!-- Botón deshabilitado si los campos están vacíos -->
         <button type="submit" [disabled]="!username || !password || !loginForm.form.valid">Iniciar sesión</button>
