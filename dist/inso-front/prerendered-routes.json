@@ -1,0 +1,11 @@
+{
+  "routes": [
+    "/edit",
+    "/loans",
+    "/loans/new-loan",
+    "/login",
+    "/schedule",
+    "/users",
+    "/users/register"
+  ]
+}
