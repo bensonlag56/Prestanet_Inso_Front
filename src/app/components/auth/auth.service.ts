@@ -20,6 +20,7 @@ export class AuthService {
   login(credentials: {
     username: string;
     password: string;
+    role: "CLIENT"
   }): Observable<string> {
     return this.http
       .post(`${this.apiUrl}/login`, credentials, { responseType: "text" })
@@ -34,7 +35,7 @@ export class AuthService {
   register(user: {
     username: string;
     password: string;
-    role: string;
+    role: "CLIENT"
   }): Observable<string> {
     return this.http
       .post(`${this.apiUrl}/register`, user, { responseType: "text" })
