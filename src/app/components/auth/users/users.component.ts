@@ -14,11 +14,7 @@ import { FormsModule } from "@angular/forms";
 export class UsersComponent {
   users: any[] = [];
   filteredUsers: any[] = [];
-  searchQuery: string = '';
-  selectedRole: string = '';
   sortOrder: string = 'asc';
-  itemsPerPage: number = 10;
-  currentPage: number = 1;
 
   constructor( private router: Router) {}
 

@@ -1,1 +1,63 @@
-<p>new-loan works!</p>
+<div class="container mx-auto p-8 bg-white rounded-lg shadow-lg mt-12">
+  <h2 class="text-2xl font-semibold mb-6">Solicitud de Préstamo</h2>
+  
+  <form (ngSubmit)="onSubmit()" #loanForm="ngForm">
+    <!-- Tipo de Solicitud: Natural o Jurídica -->
+    <div class="mb-6">
+      <label for="loanType" class="block text-lg font-medium mb-2">Tipo de Solicitud</label>
+      <select [(ngModel)]="loanType" name="loanType" id="loanType" class="px-4 py-2 border rounded-lg w-full" required>
+        <option value="natural">Persona Natural</option>
+        <option value="juridica">Persona Jurídica</option>
+      </select>
+    </div>
+
+    <!-- Formulario para Persona Natural -->
+    <div *ngIf="loanType === 'natural'" class="space-y-4">
+      <div class="mb-4">
+        <label for="clientName" class="block text-lg font-medium mb-2">Nombre</label>
+        <input type="text" id="clientName" name="clientName" [(ngModel)]="clientName" class="px-4 py-2 border rounded-lg w-full" required />
+        <div *ngIf="clientName === '' && formSubmitted" class="text-red-500 text-sm">El campo "Nombre" es obligatorio.</div>
+      </div>
+
+      <div class="mb-4">
+        <label for="dni" class="block text-lg font-medium mb-2">DNI</label>
+        <input type="text" id="dni" name="dni" [(ngModel)]="dni" class="px-4 py-2 border rounded-lg w-full" required />
+        <div *ngIf="dni && !isValidDni" class="text-red-500 text-sm">El DNI debe tener exactamente 8 dígitos numéricos.</div>
+      </div>
+    </div>
+
+    <!-- Formulario para Persona Jurídica -->
+    <div *ngIf="loanType === 'juridica'" class="space-y-4">
+      <div class="mb-4">
+        <label for="companyName" class="block text-lg font-medium mb-2">Nombre de la Empresa</label>
+        <input type="text" id="companyName" name="companyName" [(ngModel)]="companyName" class="px-4 py-2 border rounded-lg w-full" required />
+        <div *ngIf="companyName === '' && formSubmitted" class="text-red-500 text-sm">El campo "Nombre de la Empresa" es obligatorio.</div>
+      </div>
+      <div class="mb-4">
+        <label for="companyName" class="block text-lg font-medium mb-2">Razón Social</label>
+        <input type="text" id="companyName" name="companyName" [(ngModel)]="companyName" class="px-4 py-2 border rounded-lg w-full" required />
+        <div *ngIf="companyName === '' && formSubmitted" class="text-red-500 text-sm">El campo "Razón Social" es obligatorio.</div>
+      </div>
+      <div class="mb-4">
+        <label for="ruc" class="block text-lg font-medium mb-2">RUC</label>
+        <input type="text" id="ruc" name="ruc" [(ngModel)]="ruc" class="px-4 py-2 border rounded-lg w-full" required />
+        <div *ngIf="ruc && !isValidRuc" class="text-red-500 text-sm">El RUC debe tener exactamente 11 dígitos numéricos.</div>
+      </div>
+    </div>
+
+    <!-- Mensajes de error generales -->
+    <div *ngIf="formError" class="text-red-500 text-sm mt-4">Hubo un error al procesar la solicitud. Por favor, intente de nuevo.</div>
+
+    <!-- Botón de Envío -->
+    <button type="submit" class="bg-gray-500 text-white px-6 py-3 rounded-lg mt-6 hover:bg-gray-800 cursor-pointer" [disabled]="!loanForm.valid || !isValidDni || !isValidRuc">
+      Enviar Solicitud
+    </button>
+
+    <!-- Mensaje de Confirmación -->
+    <div *ngIf="formSubmitted && isValidForm" class="mt-6 text-green-500">
+      <p>Solicitud recibida correctamente.</p>
+      <p><strong>Nombre:</strong> {{ loanType === 'natural' ? clientName : companyName }}</p>
+      <p><strong>{{ loanType === 'natural' ? 'DNI' : 'RUC' }}:</strong> {{ loanType === 'natural' ? dni : ruc }}</p>
+    </div>
+  </form>
+</div>

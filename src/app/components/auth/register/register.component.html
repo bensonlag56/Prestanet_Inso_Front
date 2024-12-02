@@ -1,1 +1,35 @@
-<p>register works!</p>
+<div class="container mx-auto p-8 bg-white rounded-lg shadow-lg mt-12">
+    <h2 class="text-2xl font-semibold mb-6">Registro de Nuevo Usuario</h2>
+    
+    <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+      <!-- Nombre de Usuario -->
+      <div class="mb-4">
+        <label for="username" class="block text-lg font-medium mb-2">Nombre de Usuario</label>
+        <input type="text" id="username" name="username" [(ngModel)]="username" class="px-4 py-2 border rounded-lg w-full" required />
+        <div *ngIf="usernameExists" class="text-red-500 text-sm">El nombre de usuario ya está en uso. Elija otro.</div>
+        <div *ngIf="username === '' && formSubmitted" class="text-red-500 text-sm">El campo "Nombre de Usuario" es obligatorio.</div>
+      </div>
+  
+      <!-- Contraseña -->
+      <div class="mb-4">
+        <label for="password" class="block text-lg font-medium mb-2">Contraseña</label>
+        <input type="password" id="password" name="password" [(ngModel)]="password" class="px-4 py-2 border rounded-lg w-full" required />
+        <div *ngIf="password === '' && formSubmitted" class="text-red-500 text-sm">El campo "Contraseña" es obligatorio.</div>
+      </div>
+  
+      <!-- Mensajes de error generales -->
+      <div *ngIf="formError" class="text-red-500 text-sm mt-4">Hubo un error al procesar el registro. Por favor, intente de nuevo.</div>
+  
+      <!-- Botón de Envío -->
+      <button type="submit" class="bg-gray-500 text-white px-6 py-3 rounded-lg mt-6 hover:bg-gray-800 cursor-pointer" [disabled]="!registerForm.valid">
+        Crear Usuario
+      </button>
+  
+      <!-- Mensaje de Confirmación -->
+      <div *ngIf="formSubmitted && userCreated" class="mt-6 text-green-500">
+        <p>Usuario creado exitosamente.</p>
+        <p><strong>Nombre de Usuario:</strong> {{ username }}</p>
+      </div>
+    </form>
+  </div>
+  

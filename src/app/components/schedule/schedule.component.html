@@ -1,1 +1,22 @@
-<p>schedule works!</p>
+<div class="container mx-auto p-8 bg-white rounded-lg shadow-lg mt-12">
+    <h2 class="text-2xl font-semibold mb-6">Cronogramas de Préstamos</h2>
+  
+    <div *ngIf="!schedules.length" class="text-center text-gray-500">
+      No se encontraron cronogramas registrados.
+    </div>
+  
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8" *ngFor="let schedule of schedules">
+      <div class="bg-white shadow-lg rounded-lg p-6 text-center hover:shadow-2xl transition duration-150 relative">
+        <h3 class="text-xl font-semibold">{{ schedule.clientName }}</h3>
+        <p class="text-gray-600 mt-4">DNI / RUC: {{ schedule.clientId }}</p>
+        <p class="text-gray-600 mt-4">Tipo de Préstamo: {{ schedule.loanType }}</p>
+        
+        <div class="mt-6">
+          <button [routerLink]="['/schedule/details', schedule.id]" class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition duration-150">
+            Ver Detalles
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

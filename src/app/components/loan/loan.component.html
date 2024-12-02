@@ -1,1 +1,52 @@
-<p>loan works!</p>
+<div class="container mx-auto p-8 bg-white rounded-lg shadow-lg mt-12">
+    <!-- Filtro de Estado -->
+    <div class="flex justify-between items-center mb-8">
+        <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar por Cliente, DNI o RUC"
+            class="px-4 py-2 border rounded-lg" (input)="filterLoans()">
+        <select [(ngModel)]="selectedStatus" (change)="filterLoans()" class="px-4 py-2 border rounded-lg">
+            <option value="">Todos</option>
+            <option value="Pendiente">Pendiente</option>
+            <option value="Finalizado">Finalizado</option>
+        </select>
+        <button class="bg-gray-800 text-white px-6 py-3 rounded-lg text-lg hover:scale-110 transition duration-150"
+            [routerLink]="'new-loan'">
+            Solicitar Préstamo
+        </button>
+    </div>
+
+    <!-- Mensaje si no hay préstamos -->
+    <div *ngIf="filteredLoans.length === 0" class="text-center text-xl text-gray-500">
+        No se encontraron préstamos registrados.
+    </div>
+
+    <!-- Listado de préstamos -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <div *ngFor="let loan of filteredLoans"
+            class="bg-white shadow-lg rounded-lg p-6 text-center hover:shadow-2xl transition duration-150 relative">
+            <p class="text-xl font-semibold mt-4">{{ loan.clientName }}</p>
+            <p class="text-black-500 mt-4">DNI/RUC: {{ loan.clientDni }}</p>
+            <p class="text-black-500 mt-4">Monto: {{ loan.amount | currency }}</p>
+            <p class="text-black-500 mt-4">Tipo: {{ loan.loanType }}</p>
+            <p class="text-black-500 mt-4">Estado:
+                <span
+                    [ngClass]="{'text-yellow-500': loan.status === 'Pendiente', 'text-green-500': loan.status === 'Finalizado'}">
+                    {{ loan.status }}
+                </span>
+            </p>
+
+            <!-- Cambio de estado -->
+            <div class="flex justify-center mt-4">
+                <button *ngIf="loan.status !== 'Finalizado'"
+                    class="bg-green-500 text-white px-6 py-2 rounded-lg text-lg hover:scale-110 transition duration-150"
+                    (click)="changeStatus(loan, 'Aprobado')">
+                    Aprobar
+                </button>
+                <button *ngIf="loan.status !== 'Finalizado'"
+                    class="bg-red-500 text-white px-6 py-2 rounded-lg text-lg hover:scale-110 transition duration-150 ml-4"
+                    (click)="changeStatus(loan, 'Rechazado')">
+                    Rechazar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
