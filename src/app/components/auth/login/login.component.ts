@@ -28,7 +28,7 @@ export class LoginComponent {
     }
 
     this.authService
-      .login({ username: this.username, password: this.password })
+      .login({ username: this.username, password: this.password, role: "CLIENT"})
       .subscribe({
         next: (token) => {
           this.authService.saveToken(token); // Guarda el token en localStorage
