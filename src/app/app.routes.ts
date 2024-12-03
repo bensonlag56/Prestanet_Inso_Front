@@ -15,20 +15,17 @@ export const routes: Routes = [
   {
     path: "users/register",
     component: RegisterComponent,
-    canActivate: [AuthGuard],
   },
-  { path: "edit", component: EditComponent, canActivate: [AuthGuard] },
-  { path: "users", component: UsersComponent, canActivate: [AuthGuard] },
-  { path: "loans", component: LoanComponent, canActivate: [AuthGuard] },
+  { path: "edit", component: EditComponent },
+  { path: "users", component: UsersComponent },
+  { path: "loans", component: LoanComponent},
   {
     path: "loans/new-loan",
     component: NewLoanComponent,
-    canActivate: [AuthGuard],
   },
-  { path: "schedule", component: ScheduleComponent, canActivate: [AuthGuard] },
+  { path: "schedule", component: ScheduleComponent },
   {
     path: "schedule/details/:id",
     component: ScheduleDetailsComponent,
-    canActivate: [AuthGuard],
   },
 ];
