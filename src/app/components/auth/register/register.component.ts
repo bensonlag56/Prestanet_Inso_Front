@@ -42,7 +42,7 @@ export class RegisterComponent {
       .register({
         username: this.username,
         password: this.password,
-        role: "USER",
+        role: "CLIENT",
       })
       .subscribe({
         next: () => {
